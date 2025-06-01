@@ -1,5 +1,6 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
+import * as cheerio from 'cheerio';
 import { fetchStoryDetails } from './stories.js';
 
 function getMcpServer() {
@@ -43,6 +44,51 @@ function getMcpServer() {
                         text: JSON.stringify(stories)
                     }
                 ]
+            }
+        }
+    )
+
+    server.tool(
+        "fetch-web-page",
+        "Fetch the contents of a webpage",
+        {
+            url: z.string().url("Invalid URL provided"),
+        },
+        async ({ url }) => {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    return {
+                        content: [
+                            {
+                                type: "text",
+                                text: `Error fetching page: ${response.status} ${response.statusText}`
+                            }
+                        ]
+                    }
+                }
+                const html = await response.text();
+                const $ = cheerio.load(html);
+                const textContent = $('body').text(); // Or more specific selectors
+                
+                return {
+                    content: [
+                        {
+                            type: "text",
+                            text: textContent.trim()
+                        }
+                    ]
+                }
+            } catch (error: unknown) {
+                console.error(error);
+                return {
+                    content: [
+                        {
+                            type: "text",
+                            text: `Error fetching or parsing page: ${error}`
+                        }
+                    ]
+                }
             }
         }
     )
