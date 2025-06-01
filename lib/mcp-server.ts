@@ -94,6 +94,49 @@ function getMcpServer() {
         }
     )
 
+    server.tool(
+        "fetch-google-style-guide",
+        "Get the style guide of google for code review assistance.",
+        async () => {
+            try {
+                const response = await fetch("https://google.github.io/styleguide/");
+                if (!response.ok) {
+                    return {
+                        content: [
+                            {
+                                type: "text",
+                                text: `Error fetching page: ${response.status} ${response.statusText}`
+                            }
+                        ]
+                    }
+                }
+                const html = await response.text();
+                const $ = cheerio.load(html);
+                const textContent = $('body').text(); // Or more specific selectors
+                console.log(textContent);
+                
+                return {
+                    content: [
+                        {
+                            type: "text",
+                            text: textContent.trim()
+                        }
+                    ]
+                }
+            } catch (error: unknown) {
+                console.error(error);
+                return {
+                    content: [
+                        {
+                            type: "text",
+                            text: `Error fetching or parsing page: ${error}`
+                        }
+                    ]
+                }
+            }
+        }
+    )
+
     server.prompt(
         "fetch-best-x-stories",
         "Fetches X number of best stories from HackerNews API. Limits to 500 stories.",
