@@ -5,16 +5,16 @@
   "private": true,
   "type": "module",
   "bin": {
-    "hackernews-mcp": "./build/index.js"
+    "hackernews-mcp": "./build/api/index.js"
   },
   "files": [
     "build"
   ],
   "scripts": {
-    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "build": "tsc && node -e \"require('fs').chmodSync('build/api/index.js', '755')\"",
     "watch": "tsc --watch",
-    "inspect": "npx @modelcontextprotocol/inspector build/index.js",
-    "dev": "node build/index.js"
+    "inspect": "npx @modelcontextprotocol/inspector build/api/index.js",
+    "dev": "node build/api/index.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.11.4",

@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
-import { getMcpServer } from "./mcp-server.js";
+import { getMcpServer } from "../lib/mcp-server.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 
 const app = express();

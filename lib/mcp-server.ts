@@ -1,6 +1,6 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
-import { fetchStoryDetails } from './lib/stories.js';
+import { fetchStoryDetails } from './stories.js';
 
 function getMcpServer() {
     const server = new McpServer({
