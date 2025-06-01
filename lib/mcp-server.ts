@@ -70,6 +70,7 @@ function getMcpServer() {
                 const html = await response.text();
                 const $ = cheerio.load(html);
                 const textContent = $('body').text(); // Or more specific selectors
+                console.log(textContent);
                 
                 return {
                     content: [
