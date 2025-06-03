@@ -95,7 +95,7 @@ function getMcpServer() {
     )
 
     server.tool(
-        "fetch-google-style-guide",
+        "fetch-cr-rules",
         "Get the style guide of google for code review assistance.",
         async () => {
             try {
